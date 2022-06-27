@@ -1,12 +1,15 @@
 <template>
-  <div>Login</div>
+    <div>
+        <h1>EDIT</h1>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "LoginComponent",
-};
+
+}
 </script>
 
 <style>
+
 </style>
