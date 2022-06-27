@@ -20,10 +20,10 @@ export const router = new VueRouter({
                     name: 'list-todo', path: '/', props: true, component: ListTodoComponent,
                 },
                 {
-                    name: 'edit-todo', path: 'edit', props: true, component: EditTodoComponent,
+                    name: 'edit-todo', path: '/edit/:id', props: true, component: EditTodoComponent,
                 },
                 {
-                    name: 'add-todo', path: 'add', props: true, component: AddTodoComponent,
+                    name: 'add-todo', path: '/add', props: true, component: AddTodoComponent,
                 }
             ]
         },  

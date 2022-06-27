@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -48,7 +49,6 @@ export default {
     this.form = this.$form.createForm(this, { name: "add_todo_form" });
   },
   computed: {
-    ...Vuex.map(['todoList']),
     formItemLayout() {
       const { formLayout } = this;
       return formLayout === "horizontal"
@@ -68,13 +68,14 @@ export default {
     },
   },
   methods: {
+    ...mapMutations(["addTodo"]),
     submitHandler(e) {
-      console.log("submit", e);
       e.preventDefault();
       this.form.validateFields((err, values) => {
-        console.log("values", values);
         if (!err) {
-          console.log("Received values of form: ", values);
+          this.addTodo(values);
+          this.$router.push({ name: "list-todo" });
+          this.$message.success("Thêm thành công!");
         }
       });
     },

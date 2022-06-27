@@ -13,6 +13,7 @@
         ]"
         placeholder="Tên người dùng"
       >
+        
         <a-icon slot="prefix" type="user" style="color: rgba(0, 0, 0, 0.25)" />
       </a-input>
     </a-form-item>
@@ -92,6 +93,8 @@ export default {
 .login-form {
   max-width: 300px;
   margin: auto;
+  text-align: center;
+  margin: 50px;
 }
 .login-form-forgot {
   float: right;

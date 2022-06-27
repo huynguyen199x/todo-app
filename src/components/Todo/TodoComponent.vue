@@ -6,19 +6,19 @@
       @collapse="onCollapse"
       @breakpoint="onBreakpoint"
     >
-      <div class="logo" />
-      <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
-        <a-menu-item key="1">
-          <a-icon type="user" />
-          <span class="nav-text">
-            <router-link :to="{ name: 'list-todo' }"> Danh sách </router-link>
-          </span>
+      <div class="logo"></div>
+      <a-menu theme="dark" mode="inline">
+        <a-menu-item>
+          <router-link :to="{ name: 'list-todo' }">
+            <a-icon type="user" />
+            <span class="nav-text"> Danh sách </span>
+          </router-link>
         </a-menu-item>
-        <a-menu-item key="2">
-          <a-icon type="video-camera" />
-          <span class="nav-text">
-             <router-link :to="{ name: 'add-todo' }"> Thêm </router-link>
-          </span>
+        <a-menu-item>
+          <router-link :to="{ name: 'add-todo' }">
+            <a-icon type="video-camera" />
+            <span class="nav-text"> Thêm </span>
+          </router-link>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -63,12 +63,12 @@ export default {
 
 
 <style scoped>
-  a{
-    color: rgb(224, 209, 209);
-  }
-  a:hover{
-     color: white;
-  }
+a {
+  color: rgb(224, 209, 209);
+}
+a:hover {
+  color: white;
+}
 </style>
 
 

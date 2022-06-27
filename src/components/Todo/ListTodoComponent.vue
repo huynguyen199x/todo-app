@@ -1,15 +1,12 @@
 <template>
-  <a-table :columns="columns" :data-source="data">
-    <a slot="name" slot-scope="text">{{ text }}</a>
-    <span slot="customTitle">Name</span>
-    <span slot="tags" slot-scope="tags">
+  <a-table :columns="columns" :data-source="todoList">
+    <span slot="status" slot-scope="status">
       <a-tag
-        v-for="tag in tags"
-        :key="tag"
         :color="
-          tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
+          status === true ? 'green' : 'volcano',
+        "
       >
-        {{ tag.toUpperCase() }}
+        {{ status.toString().toUpperCase() }}
       </a-tag>
     </span>
     <span slot="action" slot-scope="text, record">
@@ -18,12 +15,13 @@
         theme="twoTone"
         two-tone-color="#ffc53d"
         :style="{ fontSize: '24px' }"
+        @click="editTodo(record.id)"
       />
       <a-divider type="vertical" />
       <a-popconfirm
-        v-if="data.length"
+        v-if="todoList.length"
         title="Bạn có chắc muốn xóa?"
-        @confirm="() => deleteTodo(record.key)"
+        @confirm="() => deleteHandler(record.id)"
       >
         <a-icon
           type="delete"
@@ -36,28 +34,24 @@
   </a-table>
 </template>
 <script>
+import { mapGetters, mapMutations } from "vuex";
 const columns = [
   {
+    dataIndex: "id",
+    key: "id",
+    title: "ID",
+  },
+
+  {
+    title: "Tên",
     dataIndex: "name",
     key: "name",
-    slots: { title: "customTitle" },
-    scopedSlots: { customRender: "name" },
   },
   {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
-  },
-  {
-    title: "Status",
-    key: "tags",
-    dataIndex: "tags",
-    scopedSlots: { customRender: "tags" },
+    title: "Trạng thái",
+    dataIndex: "status",
+    key: "status",
+    scopedSlots: { customRender: "status" },
   },
   {
     title: "Action",
@@ -66,132 +60,25 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-];
-
 export default {
   data() {
     return {
-      data,
       columns,
     };
   },
+
+  computed: {
+    ...mapGetters(["todoList"]),
+  },
+
   methods: {
-    deleteTodo(key) {
-      const data = [...this.data];
-      this.data = data.filter(item => item.key !== key);
+    ...mapMutations(["deleteTodo"]),
+    deleteHandler(id) {
+      this.deleteTodo(id);
+      this.$message.success("Xóa thành công!");
+    },
+    editTodo(id) {
+      this.$router.push({ name: "edit-todo", params: { id: id } });
     },
   },
 };
